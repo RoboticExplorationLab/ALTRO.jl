@@ -19,7 +19,7 @@ Altro.set_options!(solver, verbose=0)
 
 # Test ALTRO solver options
 solver = ALTROSolver(prob, cost_tolerance=1e-1, square_root=true, 
-    iterations=210, iterations_outer=60, ρ_chol=1e-1, constraint_tolerance=1e-2)
+    iterations=210, iterations_outer=60, ρ_chol=1e-1, constraint_tolerance=1e-2, static_bp=false)
 @test solver.opts.cost_tolerance == 1e-1
 @test solver.solver_al.opts.cost_tolerance == 1e-1
 @test solver.solver_al.solver_uncon.opts.cost_tolerance == 1e-1
@@ -30,3 +30,4 @@ solver = ALTROSolver(prob, cost_tolerance=1e-1, square_root=true,
 @test solver.solver_pn.opts.constraint_tolerance == 1e-2
 @test solver.solver_al.opts.constraint_tolerance == 1e-2
 @test solver.opts.constraint_tolerance == 1e-2
+@test solver.solver_al.solver_uncon.opts.static_bp == false
