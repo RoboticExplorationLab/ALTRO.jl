@@ -33,7 +33,7 @@ function backwardpass!(solver::iLQRSolver{T,QUAD,L,O,n,n̄,m}) where {T,QUAD<:Qu
 		# Get error state expanions
 		fdx,fdu = TO.error_expansion(solver.D[k], model)
 		cost_exp = solver.Q[k]
-		Q = solver.Q_tmp 
+		Q = solver.Q_tmp
 
 		# Calculate action-value expansion
 		_calc_Q!(Q, cost_exp, S[k+1], fdx, fdu, S[k])
@@ -128,9 +128,9 @@ function static_backwardpass!(solver::iLQRSolver{T,QUAD,L,O,n,n̄,m}) where {T,Q
 		Sxx, Sx, ΔV_ = _calc_ctg!(Q, K_, d_)
 		# k >= N-2 && println(diag(Sxx))
 		if solver.opts.save_S
-			S[k].xx .= Sxx
-			S[k].x .= Sx
-			S[k].c .= ΔV_
+			S[k].Q .= Sxx
+			S[k].q .= Sx
+			S[k].c = sum(ΔV_)
 		end
 		ΔV += ΔV_
         k -= 1
